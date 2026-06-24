@@ -51,7 +51,7 @@ export default function Hero() {
                                     ))}
                                 </div>
                                 <span className="text-xs text-gray-200/90">
-                                    Trusted by brands & founders worldwide
+                                    Trusted by 10,000 + creators
                                 </span>
                             </motion.a>
 
@@ -61,7 +61,7 @@ export default function Hero() {
                                 viewport={{ once: true }}
                                 transition={{ type: "spring", stiffness: 250, damping: 70, mass: 1, delay: 0.1 }}
                             >
-                                We design & build <br />
+                                Create viral UGC <br />
                                 <span className="bg-clip-text text-transparent bg-linear-to-r from-indigo-300 to-indigo-400">
                                     high-impact digital experiences
                                 </span>
@@ -73,8 +73,8 @@ export default function Hero() {
                                 viewport={{ once: true }}
                                 transition={{ type: "spring", stiffness: 250, damping: 70, mass: 1, delay: 0.2 }}
                             >
-                                A creative digital agency helping startups and businesses grow through
-                                thoughtful design, scalable development and performance-driven strategy.
+                                Upload product images and a model photo - ouer AI instantly prouces pofessional lifstyle 
+                                imagery and short-form videos optimized for commercials & reels.
                             </motion.p>
 
                             <motion.div className="flex flex-col sm:flex-row items-center gap-4 mb-8"
@@ -85,14 +85,14 @@ export default function Hero() {
                             >
                                 <a href="/" className="w-full sm:w-auto">
                                     <PrimaryButton className="max-sm:w-full py-3 px-7">
-                                        Start your project
+                                        Start generating - it's free
                                         <ArrowRightIcon className="size-4" />
                                     </PrimaryButton>
                                 </a>
 
                                 <GhostButton className="max-sm:w-full max-sm:justify-center py-3 px-5">
                                     <PlayIcon className="size-4" />
-                                    View our work
+                                    View demo
                                 </GhostButton>
                             </motion.div>
 
@@ -105,7 +105,7 @@ export default function Hero() {
                                 <div className="flex items-center gap-2 p-2 px-3 sm:px-6.5 hover:bg-white/3 transition-colors">
                                     <ZapIcon className="size-4 text-sky-500" />
                                     <div>
-                                        <div>Strategy-led execution</div>
+                                        <div>Seconds to create</div>
                                         <div className="text-xs text-gray-400">
                                             Focused on growth & results
                                         </div>
@@ -117,9 +117,9 @@ export default function Hero() {
                                 <div className="flex items-center gap-2 p-2 px-3 sm:px-6.5 hover:bg-white/3 transition-colors">
                                     <CheckIcon className="size-4 text-cyan-500" />
                                     <div>
-                                        <div>Full-service delivery</div>
+                                        <div>Commercial rights</div>
                                         <div className="text-xs text-gray-400">
-                                            Design, dev & marketing
+                                           
                                         </div>
                                     </div>
                                 </div>
