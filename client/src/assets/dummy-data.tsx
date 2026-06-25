@@ -1,21 +1,21 @@
 import { UploadIcon, VideoIcon, ZapIcon } from 'lucide-react';
 
 export const featuresData = [
-    {
-        icon: <UploadIcon className="w-6 h-6" />,
-        title: 'Discovery & Planning',
-        desc: 'We understand your goals, audience and challenges to craft a clear, actionable strategy.'
-    },
-    {
-        icon: <ZapIcon className="w-6 h-6" />,
-        title: 'Design & Development',
-        desc: 'High-quality design and scalable development focused on performance and usability.'
-    },
-    {
-        icon: <VideoIcon className="w-6 h-6" />,
-        title: 'Launch & Growth',
-        desc: 'We launch, optimize and continuously improve to drive measurable business growth.'
-    }
+   {
+  icon: <UploadIcon className="w-6 h-6" />,
+  title: 'Smart Upload',
+  desc: 'Drag & drop your assets. We auto-optimize formats and sizes.'
+},
+{
+  icon: <ZapIcon className="w-6 h-6" />,
+  title: 'Instant Generation',
+  desc: 'Optimized models deliver output in seconds with great fidelity.'
+},
+{
+  icon: <VideoIcon className="w-6 h-6" />,
+  title: 'Video Synthesis',
+  desc: 'Bring product shots to life with short-form, social-ready videos.'
+},
 ];
 
 export const plansData = [
