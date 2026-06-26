@@ -7,16 +7,17 @@ export default function Hero() {
     const trustedUserImages = [
         'https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=50',
         'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=50',
-        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=50&h=50&fit=crop'
+        'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=100'
     ];
 
-    const mainImageUrl = 'https://images.unsplash.com/photo-1576267423445-b2e0074d68a4?q=80&w=1600&auto=format&fit=crop';
+   const mainImageUrl =
+  'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600&auto=format&fit=crop';
 
-    const galleryStripImages = [
-        'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=100',
-        'https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=100',
-        'https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=100',
-    ];
+const galleryStripImages = [
+  'https://images.unsplash.com/photo-1545239351-1141bd82e8a6?w=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=80&auto=format&fit=crop',
+];
 
     const trustedLogosText = [
         'Startups',
