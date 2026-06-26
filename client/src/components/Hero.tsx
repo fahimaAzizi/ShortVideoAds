@@ -20,10 +20,10 @@ const galleryStripImages = [
 ];
 
     const trustedLogosText = [
-        'Startups',
-        'Scale-ups',
-        'Founders',
-        'Global teams',
+        'Adobe',
+        'Figma',
+        'Canva',
+        'Shopify',
         'Creative brands'
     ];
 
