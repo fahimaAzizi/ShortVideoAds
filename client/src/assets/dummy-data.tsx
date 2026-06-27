@@ -22,22 +22,22 @@ export const plansData = [
     {
         id: 'starter',
         name: 'Starter',
-        price: '$499',
-        desc: 'Best for early-stage startups.',
-        credits: 'One-time',
+        price: '$9',
+        desc: 'try the platform at no cost .',
+        credits: 25,
         features: [
-            'Project discovery & planning',
-            'UI/UX design',
-            'Basic website development',
-            '1 revision round',
+            '25 Credits',
+            'Standard quality',
+            'No watermark',
+            'Slower generation speed',
             'Email support'
         ]
     },
     {
         id: 'pro',
-        name: 'Growth',
-        price: '$1,499',
-        desc: 'Growing teams and businesses.',
+        name: 'Pro',
+        price: '$18',
+        desc: 'Creators & small Starter',
         credits: 'Monthly',
         features: [
             'Everything in Starter',
@@ -50,15 +50,15 @@ export const plansData = [
     },
     {
         id: 'ultra',
-        name: 'Scale',
-        price: '$3,999',
-        desc: 'For brands ready to scale fast.',
-        credits: 'Custom',
+        name: 'Ultra',
+        price: '$99',
+        desc: 'Scale adross teams and agencies.',
+        credits: 300,
         features: [
-            'Everything in Growth',
-            'Dedicated project manager',
-            'Ongoing optimization',
-            'Marketing & growth support',
+            '300 Credits',
+            'FHD quality',
+            'No watermark',
+            'Fast generation speed',
             'Chat + Email support'
         ]
     }
