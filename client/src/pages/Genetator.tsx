@@ -25,9 +25,9 @@ const Genetator = () => {
 
 
 
-  return (
+   return (
     <div className="min-h-screen text-white p-6 md:p md:p-12 mt-28">
-      <form className="max-w-4xl mx-auto mb-40">
+      <form className="max-w-4xl mx-auto mb-40" onSubmit={handleGenerate}>
         <Title
           heading="Create In-Context Image"
           description="Upload your model and product images to generate stunning UGC, short-form videos and social media posts"
