@@ -5,28 +5,16 @@ import UploadZone from "../components/UploadZone"
 
 const Genetator = () => {
 
-  const [name, setName] = useState('')
-  const [productName, setProductName] = useState('')
-  const [productDescription, setProductDescription] =useState('9:16')
-  const [ aspectRatio, setAspectRatio] = useState<File | null>(null)
   const [productImage, setProductImage] = useState<File | null>(null)
-  const [userPrompt , setUserPrompt] = useState('')
-  const [isGenerating, setIsGenerating] = useState('')
-  const [modelImage , setModelImage]
+  const [modelImage, setModelImage] = useState<File | null>(null)
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, type:'prodect' | 'model')=>{
-    if(e.target.files && e.target.files[0]){
-      if(type === 'product') setProductImage(e.target.files[0]);
-      else setModelImage(e.target.files[0])
-    }
+  const handleGenerate = async (e: React.FormEvent<HTMLFormElement>)=>{
+    e.preventDefault()
   }
-
-  const handleGenerate = async (e: React.FormEvent<HTMLFormElement>)
-
 
 
    return (
-    <div className="min-h-screen text-white p-6 md:p md:p-12 mt-28">
+    <div className="min-h-screen text-white p-6 md:p-12 mt-28">
       <form className="max-w-4xl mx-auto mb-40" onSubmit={handleGenerate}>
         <Title
           heading="Create In-Context Image"
@@ -36,9 +24,8 @@ const Genetator = () => {
         <div className="flex gap-20 max-sm:flex-col items-start justify-between">
           {/* left col */}
           <div className="flex flex-col w-full sm:max-w-60 gap-8 mt-8 mb-12">
-            <UploadZone label="produdt image" file={productImage} onClear={()=> setProductImage(null)} onChange={(e)=>handleFileChange(e,'prodect')}/>
-             <UploadZone label="produdt image" file={modelImage} onClear={()=> setModelImage(null)} onChange={(e)=>handleFileChange(e,'prodect')}/>
-          </div>
+    <UploadZone file={productImage} onClear={() => setProductImage(null)} onChange={(file) => setProductImage(file)}/>
+             <UploadZone file={modelImage} onClear={() => setModelImage(null)} onChange={(file) => setModelImage(file)}/>
           </div>
 
           {/* right col */}

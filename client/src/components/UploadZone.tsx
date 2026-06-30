@@ -1,8 +1,8 @@
 import { XIcon, UploadIcon } from "lucide-react";
 
-const UploadZone = ({ label, file, onClear, onChange }) => {
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
+const UploadZone = ({ file, onClear, onChange }: { file: File | null; onClear: () => void; onChange: (file: File) => void }) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
     if (selectedFile) {
       onChange(selectedFile);
     }
@@ -48,7 +48,7 @@ const UploadZone = ({ label, file, onClear, onChange }) => {
             <input
               type="file"
               accept="image/*"
-              onChange={onChange}
+              onChange={handleInputChange}
               className="absolute inset-0 opacity-0 cursor-pointer"
             />
           </>
