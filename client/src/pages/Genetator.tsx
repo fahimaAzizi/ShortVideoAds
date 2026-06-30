@@ -36,7 +36,9 @@ const Genetator = () => {
         <div className="flex gap-20 max-sm:flex-col items-start justify-between">
           {/* left col */}
           <div className="flex flex-col w-full sm:max-w-60 gap-8 mt-8 mb-12">
-            <UploadZone label="produdt image" file={} onClear={} onChange={}/>
+            <UploadZone label="produdt image" file={productImage} onClear={()=> setProductImage(null)} onChange={(e)=>handleFileChange(e,'prodect')}/>
+             <UploadZone label="produdt image" file={modelImage} onClear={()=> setModelImage(null)} onChange={(e)=>handleFileChange(e,'prodect')}/>
+          </div>
           </div>
 
           {/* right col */}
