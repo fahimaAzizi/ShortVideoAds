@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import Title from "../components/Title"
 import UploadZone from "../components/UploadZone"
 
@@ -10,7 +10,20 @@ const Genetator = () => {
   const [productDescription, setProductDescription] =useState('9:16')
   const [ aspectRatio, setAspectRatio] = useState<File | null>(null)
   const [productImage, setProductImage] = useState<File | null>(null)
-  const [userPrompt , setUserPrompt]
+  const [userPrompt , setUserPrompt] = useState('')
+  const [isGenerating, setIsGenerating] = useState('')
+  const [modelImage , setModelImage]
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, type:'prodect' | 'model')=>{
+    if(e.target.files && e.target.files[0]){
+      if(type === 'product') setProductImage(e.target.files[0]);
+      else setModelImage(e.target.files[0])
+    }
+  }
+
+  const handleGenerate = async (e: React.FormEvent<HTMLFormElement>)
+
+
 
   return (
     <div className="min-h-screen text-white p-6 md:p md:p-12 mt-28">
