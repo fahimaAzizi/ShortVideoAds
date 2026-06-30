@@ -36,21 +36,26 @@ const UploadZone = ({ label, file, onClear, onChange }) => {
             </div>
           </>
         ) : (
-          <>
-            <UploadIcon className="w-12 h-12 text-violet-400 mb-4" />
-            <p className="text-white font-medium">{label}</p>
+          <> 
+           <div className="w-16 h-16 rounded-full bg-white/5 flex items-center jusify-center mb-4 group-hover:scale110 transition-transform"> 
+           <UploadIcon className="w-12 h-12 text-violet-400 mb-4" />
+           </div>
+
+        
+           
+            <p className="text-white font-medium">Drag & drop or click to upload</p>
 
             <input
               type="file"
               accept="image/*"
-              onChange={handleFileChange}
+              onChange={onChange}
               className="absolute inset-0 opacity-0 cursor-pointer"
             />
           </>
         )}
-      </div>
-    </div>
-  );
+        </div>
+     </div>
+   );
 };
 
-export default UploadZone;
+export default UploadZone; 
