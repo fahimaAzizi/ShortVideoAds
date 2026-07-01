@@ -1,4 +1,9 @@
 import React, { useState } from "react";
+import {
+  RectangleVerticalIcon,
+  RectangleHorizontalIcon,
+} from "lucide-react";
+
 import Title from "../components/Title";
 import UploadZone from "../components/UploadZone";
 
@@ -8,6 +13,8 @@ const Generator = () => {
 
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
+  const [aspectRatio, setAspectRatio] = useState("9:16");
+  const [userPrompt, setUserPrompt] = useState("");
 
   const handleGenerate = async (
     e: React.FormEvent<HTMLFormElement>
@@ -19,6 +26,8 @@ const Generator = () => {
       modelImage,
       productName,
       productDescription,
+      aspectRatio,
+      userPrompt,
     });
   };
 
@@ -35,16 +44,16 @@ const Generator = () => {
 
         <div className="flex gap-20 max-sm:flex-col items-start justify-between">
           {/* Left Column */}
-          <div className="flex flex-col w-full sm:max-w-72 gap-8 mt-8 mb-12">
+          <div className="flex flex-col w-full sm:max-w-72 gap-8 mt-8">
             <UploadZone
-              label="Upload Product Image"
+              label="Product Image"
               file={productImage}
               onClear={() => setProductImage(null)}
               onChange={(file) => setProductImage(file)}
             />
 
             <UploadZone
-              label="Upload Model Image"
+              label="Model Image"
               file={modelImage}
               onClear={() => setModelImage(null)}
               onChange={(file) => setModelImage(file)}
@@ -53,10 +62,10 @@ const Generator = () => {
 
           {/* Right Column */}
           <div className="w-full max-w-xl mt-8">
-            <div className="mb-6">
+            <div className="mb-4 text-gray-300">
               <label
                 htmlFor="productName"
-                className="block text-sm mb-2"
+                className="block text-sm mb-4"
               >
                 Product Name
               </label>
@@ -70,30 +79,79 @@ const Generator = () => {
                 }
                 placeholder="Enter the product name"
                 required
-                className="w-full bg-white/5 rounded-lg border border-white/10 p-4 text-sm outline-none focus:border-violet-500 transition-all"
+                className="w-full bg-white/3 rounded-lg border-2 p-4 text-sm border-violet-200/10 focus:border-violet-500/50 outline-none transition-all"
               />
             </div>
 
-            <div className="mb-8">
+            <div className="mb-4 text-gray-300">
               <label
                 htmlFor="productDescription"
-                className="block text-sm mb-2"
+                className="block text-sm mb-4"
               >
                 Product Description{" "}
-                <span className="text-gray-400">
+                <span className="text-xs text-violet-400">
                   (optional)
                 </span>
               </label>
 
               <textarea
                 id="productDescription"
-                rows={5}
+                rows={4}
                 value={productDescription}
                 onChange={(e) =>
                   setProductDescription(e.target.value)
                 }
                 placeholder="Enter the product description"
-                className="w-full bg-white/5 rounded-lg border border-white/10 p-4 text-sm outline-none focus:border-violet-500 transition-all resize-none"
+                className="w-full bg-white/3 rounded-lg border-2 p-4 text-sm border-violet-200/10 focus:border-violet-500/50 outline-none transition-all"
+              />
+            </div>
+
+            <div className="mb-4 text-gray-300">
+              <label className="block text-sm mb-4">
+                Aspect Ratio
+              </label>
+
+              <div className="flex gap-3">
+                <RectangleVerticalIcon
+                  onClick={() => setAspectRatio("9:16")}
+                  className={`p-2.5 size-12 bg-white/6 rounded-lg transition-all ring-2 ring-transparent cursor-pointer ${
+                    aspectRatio === "9:16"
+                      ? "ring-violet-500/50 bg-white/10"
+                      : ""
+                  }`}
+                />
+
+                <RectangleHorizontalIcon
+                  onClick={() => setAspectRatio("16:9")}
+                  className={`p-2.5 size-12 bg-white/6 rounded-lg transition-all ring-2 ring-transparent cursor-pointer ${
+                    aspectRatio === "16:9"
+                      ? "ring-violet-500/50 bg-white/10"
+                      : ""
+                  }`}
+                />
+              </div>
+            </div>
+
+            <div className="mb-6 text-gray-300">
+              <label
+                htmlFor="userPrompt"
+                className="block text-sm mb-4"
+              >
+                User Prompt{" "}
+                <span className="text-xs text-violet-400">
+                  (optional)
+                </span>
+              </label>
+
+              <textarea
+                id="userPrompt"
+                rows={4}
+                value={userPrompt}
+                onChange={(e) =>
+                  setUserPrompt(e.target.value)
+                }
+                placeholder="Describe how you want the generated image to look."
+                className="w-full bg-white/3 rounded-lg border-2 p-4 text-sm border-violet-200/10 focus:border-violet-500/50 outline-none transition-all"
               />
             </div>
 
