@@ -15,13 +15,23 @@ export interface User {
 
 export interface Project {
   id: string;
+  name?: string;
   userId: string;
+  user?: User;
   productName: string;
   productDescription?: string;
   productImage: string;
   modelImage: string;
-  aspectRatio: "9:16" | "16:9";
+  aspectRatio: string;
+  targetLength?: number;
+  generatedImage?: string;
+  generatedVideo?: string;
+  isGenerating: boolean;
+  isPublished: boolean;
+  error?: string;
   userPrompt?: string;
   resultImage?: string;
-  createdAt: string;
+  createdAt: Date | string;
+  updateAt?: Date | string;
+  uploadedImages: string[];
 }
