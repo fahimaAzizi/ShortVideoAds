@@ -165,7 +165,7 @@ const Generator = () => {
         </div>
       </form>
     </div>
-  );
+  ); 
 };
 
 export default Generator;
