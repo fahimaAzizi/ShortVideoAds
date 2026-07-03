@@ -3,12 +3,14 @@ import Features from "../components/Features";
 import Pricing from "../components/Pricing";
 import Faq from "../components/Faq";
 import CTA from "../components/CTA";
+import Community from "./Community";
 
 export default function Home() {
     return (
         <>
             <Hero />
             <Features />
+            <Community />
             <Pricing />
             <Faq />
             <CTA />

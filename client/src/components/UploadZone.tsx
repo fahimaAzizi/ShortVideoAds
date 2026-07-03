@@ -1,6 +1,6 @@
 import { XIcon, UploadIcon } from "lucide-react";
 
-const UploadZone = ({ file, onClear, onChange }: { file: File | null; onClear: () => void; onChange: (file: File) => void }) => {
+const UploadZone = ({ label, file, onClear, onChange }: { label?: string; file: File | null; onClear: () => void; onChange: (file: File) => void }) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
@@ -10,6 +10,10 @@ const UploadZone = ({ file, onClear, onChange }: { file: File | null; onClear: (
 
   return (
     <div className="relative group">
+      {label && (
+        <p className="text-white font-medium mb-4">{label}</p>
+      )}
+
       <div
         className={`relative h-64 rounded-2xl border-2 border-dashed transition-all duration-300 flex flex-col items-center justify-center bg-white/2 p-6 ${
           file

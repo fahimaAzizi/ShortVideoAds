@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Project } from "../types";
+import { useEffect, useState } from "react";
+import type { Project } from "../types";
 import { dummyGenerations } from "../assets/assets";
 import Loading from "./Loading";
 
@@ -36,14 +36,45 @@ const Community = () => {
         {projects.map((project) => (
           <div
             key={project.id}
-            className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 hover:border-violet-500/50 transition-all"
+            className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 hover:border-violet-500/50 transition-all group"
           >
-            <img
-              src={project.resultImage}
-              alt={project.productName}
-              className="w-full h-80 object-cover"
-            />
+            {/* Preview */}
+            <div
+              className={`${
+                project.aspectRatio === "9:16"
+                  ? "aspect-[9/16]"
+                  : "aspect-video"
+              } relative overflow-hidden`}
+            >
+              {project.generatedImage && (
+                <img
+                  src={project.generatedImage}
+                  alt={project.productName}
+                  className={`absolute inset-0 w-full h-full object-cover transition duration-500 ${
+                    project.generatedVideo
+                      ? "group-hover:opacity-0"
+                      : "group-hover:scale-105"
+                  }`}
+                />
+              )}
 
+              {project.generatedVideo && (
+                <video
+                  src={project.generatedVideo}
+                  muted
+                  loop
+                  playsInline
+                  className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition duration-500"
+                  onMouseEnter={(e) => e.currentTarget.play()}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.pause();
+                    e.currentTarget.currentTime = 0;
+                  }}
+                />
+              )}
+            </div>
+
+            {/* Details */}
             <div className="p-5">
               <h2 className="text-xl font-semibold text-white">
                 {project.productName}
