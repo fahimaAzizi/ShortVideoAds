@@ -42,9 +42,37 @@ const ProjectCard = (
     />
   )}
 </div>
+{/* details */}
+<div className="p-4">
 
-      {/* details */}
-      <div></div>
+  {/* product name, date, aspect ration */}
+  <div className="flex items-start justify-between gap-4">
+
+    <div className="flex-1">
+      <h3 className="font-medium text-lg mb-1">{gen.productName}</h3>
+
+      <p className="text-sm text-gray-400">
+        Created: {new Date(gen.createdAt).toLocaleString()}
+      </p>
+
+      {gen.updatedAt && (
+        <p className="text-xs text-gray-500 mt-1">
+          Updated: {new Date(gen.updatedAt).toLocaleString()}
+        </p>
+      )}
+    </div>
+
+    <div className="text-right">
+      <div className="mt-2 flex flex-col items-end gap-1">
+        <span className="text-xs px-2 py-1 bg-white/5 rounded-full">
+          Aspect: {gen.aspectRatio}
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
 
     </div>
   </div>
