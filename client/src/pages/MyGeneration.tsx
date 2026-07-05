@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import ProjectCard from "../components/ProjectCard";
-import PrimaryButton from "../components/PrimaryButton";
+import { PrimaryButton } from "../components/Buttons";
 import type { Project } from "../types";
 
 const MyGenerations = () => {
