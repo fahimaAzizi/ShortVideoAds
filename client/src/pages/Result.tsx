@@ -51,6 +51,40 @@ return loading ? (
           Back to My Generations
         </Link>
       </header>
+      {/* Grid Layout */}
+        <div className="grid lg:grid-cols-3 gap-8">
+
+          {/* Main Result Display */}
+          <div className="lg:col-span-2 space-y-6">
+
+            <div className="glass-panel inline-block p-2 rounded-2xl">
+              <div
+                className={`${project?.aspectRatio === "9:16"
+                    ? "aspect-[9/16]"
+                    : "aspect-video"
+                  } sm:max-h-[600px] rounded-xl bg-gray-900 overflow-hidden relative`}
+              >
+                {project?.generatedVideo ? (
+                  <video
+                    src={project.generatedVideo}
+                    controls
+                    autoPlay
+                    loop
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <img
+                    src={project.generatedImage}
+                    alt="Generated Result"
+                    className="w-full h-full object-cover"
+                  />
+                )}
+              </div>
+            </div>
+
+          </div>
+
+</div>
     </div>
   </div>
 );
