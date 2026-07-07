@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import type { Project } from "../types";
+import 
+  import { Loader2Icon } from "lucide-react";
 
 const Result = () => {
   const { id } = useParams<{ id: string }>();
@@ -42,6 +44,12 @@ return loading ? (
           <p className="text-gray-400 mt-2">{project.productName}</p>
         </div>
 
+        <Link
+          to="/my-generations"
+          className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition"
+        >
+          Back to My Generations
+        </Link>
       </header>
     </div>
   </div>
