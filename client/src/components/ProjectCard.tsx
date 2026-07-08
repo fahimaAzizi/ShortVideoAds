@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import type { Project } from "../types";
 import { useNavigate } from "react-router-dom";
 import { EllipsisVertical, Pencil, Trash2 } from "lucide-react";
+import { GhostButton } from "./Buttons";
 
 type ProjectCardProps = {
   gen: Project;
@@ -181,6 +182,14 @@ const ProjectCard = ({
               </div>
             </div>
           )}
+          {!forCommunity &&(
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              <GhostButton className="text-xs justify-center" onClick={()->{navigate('/result/${gen.id')}}>
+                View Delatils
+              </GhostButton>
+            </div>
+          )}
+
         </div>
       </div>
     </div>
