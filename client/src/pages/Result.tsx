@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import type { Project } from "../types";
 import 
-  import { Loader2Icon } from "lucide-react";
+  import { ImageIcon, Loader2Icon, VideoIcon } from "lucide-react";
+import { GhostButton } from "../components/Buttons";
 
 const Result = () => {
   const { id } = useParams<{ id: string }>();
@@ -111,9 +112,40 @@ return loading ? (
           Download Video
         </GhostButton>
       </a>
+      
 
     </div>
   </div>
+  {/* Generate Video Button */}
+<div className="glass-panel p-6 rounded-2xl relative overflow-hidden">
+  <div className="absolute top-0 right-0 p-4 opacity-10">
+    <VideoIcon className="size-24" />
+  </div>
+
+  <h3 className="text-xl font-semibold mb-2">Video Magic</h3>
+
+  <p className="text-gray-400 text-sm mb-6">
+    Turn this static image into a dynamic video for social media.
+  </p>
+
+  {!project.generatedVideo ? (
+    <PrimaryButton
+      onClick={generateVideo}
+      disabled={isGenerating || !project.generatedImage}
+      className="w-full justify-center"
+    >
+      <SparkleIcon className="size-4" />
+      {isGenerating ? "Generating..." : "Generate Video"}
+    </PrimaryButton>
+  ) : (
+    <div className="rounded-lg bg-green-500/10 border border-green-500/20 p-4 text-center">
+      <p className="text-green-400 font-medium">
+        ✓ Video generated successfully
+      </p>
+    </div>
+  )}
+</div>
+
 
 </div>
 
