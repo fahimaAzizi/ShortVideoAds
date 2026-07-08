@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import type { Project } from "../types";
-import 
-  import { ImageIcon, Loader2Icon, SparkleIcon, VideoIcon } from "lucide-react";
-import { GhostButton } from "../components/Buttons";
+import { ImageIcon, Loader2Icon, SparkleIcon, VideoIcon } from "lucide-react";
+import { GhostButton, PrimaryButton } from "../components/Buttons";
 
 const Result = () => {
   const { id } = useParams<{ id: string }>();
