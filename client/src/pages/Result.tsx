@@ -83,6 +83,39 @@ return loading ? (
             </div>
 
           </div>
+          {/* Sidebar Actions */}
+<div className="space-y-6">
+
+  {/* Download Buttons */}
+  <div className="glass-panel p-6 rounded-2xl">
+    <h3 className="text-xl font-semibold mb-4">Actions</h3>
+
+    <div className="flex flex-col gap-3">
+
+      <a href={project.generatedImage} download>
+        <GhostButton
+          disabled={!project.generatedImage}
+          className="w-full justify-center rounded-md py-3 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <ImageIcon className="size-4.5" />
+          Download Image
+        </GhostButton>
+      </a>
+
+      <a href={project.generatedVideo} download>
+        <GhostButton
+          disabled={!project.generatedVideo}
+          className="w-full justify-center rounded-md py-3 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <VideoIcon className="size-4.5" />
+          Download Video
+        </GhostButton>
+      </a>
+
+    </div>
+  </div>
+
+</div>
 
 </div>
     </div>
