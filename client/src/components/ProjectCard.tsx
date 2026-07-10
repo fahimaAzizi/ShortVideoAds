@@ -147,9 +147,9 @@ const ProjectCard = ({
                 Created: {new Date(gen.createdAt).toLocaleString()}
               </p>
 
-              {gen.updatedAt && (
+              {gen.updateAt && (
                 <p className="text-xs text-gray-500 mt-1">
-                  Updated: {new Date(gen.updatedAt).toLocaleString()}
+                  Updated: {new Date(gen.updateAt).toLocaleString()}
                 </p>
               )}
             </div>
@@ -184,7 +184,7 @@ const ProjectCard = ({
           )}
           {!forCommunity &&(
             <div className="mt-4 grid grid-cols-2 gap-3">
-              <GhostButton className="text-xs justify-center" onClick={()->{navigate('/result/${gen.id')}}>
+               <GhostButton className="text-xs justify-center" onClick={() => navigate(`/result/${gen.id}`)}>
                 View Delatils
               </GhostButton>
             </div>

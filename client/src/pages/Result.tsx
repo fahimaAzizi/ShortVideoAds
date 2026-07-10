@@ -134,7 +134,7 @@ const Result = () => {
 
               {!project.generatedVideo ? (
                 <PrimaryButton
-                  onClick={generateVideo}
+                  onClick={handleGenerateVideo}
                   disabled={isGenerating || !project.generatedImage}
                   className="w-full justify-center"
                 >
