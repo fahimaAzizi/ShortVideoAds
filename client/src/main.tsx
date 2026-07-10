@@ -3,6 +3,7 @@ import './index.css'
 import App from './App'
 import { BrowserRouter } from 'react-router-dom'
 import { ClerkProvider } from '@clerk/react'
+import {dark} from "@clerk/themes"
 
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
@@ -11,7 +12,15 @@ if(!PUBLISHABLE_KEY){
 
 }
 createRoot(document.getElementById('root')! as HTMLElement).render(
-<ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+<ClerkProvider
+ appearance={{
+    theme: dark,
+    variables:{
+        colorPrimary:'#4f39f6',
+        colorPrimaryForeground:'#ffffff'
+    }
+ }}
+ publishableKey={PUBLISHABLE_KEY}>
    <BrowserRouter>
         <App />
     </BrowserRouter>
