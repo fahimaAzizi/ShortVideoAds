@@ -4,8 +4,13 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { assets } from '../assets/assets';
+import { useClerk, useUser } from '@clerk/react';
 
 export default function Navbar() {
+
+    const {user} =useUser()
+     const {openSignIn, openSignUp} = useClerk()
+
     const [isOpen, setIsOpen] = useState(false);
 
     const navLinks = [
@@ -42,7 +47,8 @@ export default function Navbar() {
                     <PrimaryButton className='max-sm:text-xs hidden sm:inline-block'>Get Started</PrimaryButton>
                 </div>
 
-                <button onClick={() => setIsOpen(!isOpen)} className='md:hidden'>
+               {!user ? (
+                 <button onClick={() => setIsOpen(!isOpen)} className='md:hidden'>
                     <MenuIcon className='size-6' />
                 </button>
             </div>
@@ -52,14 +58,15 @@ export default function Navbar() {
                         {link.name}
                     </a>
                 ))}
+               
 
-                <button onClick={() => setIsOpen(false)} className='font-medium text-gray-300 hover:text-white transition'>
+                <button onClick={() => openSignIn()} className='font-medium text-gray-300 hover:text-white transition'>
                     Sign in
                 </button>
                 <PrimaryButton onClick={() => setIsOpen(false)}>Get Started</PrimaryButton>
 
                 <button
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => openSignUp()}
                     className="rounded-md bg-white p-2 text-gray-800 ring-white active:ring-2"
                 >
                     <XIcon />
