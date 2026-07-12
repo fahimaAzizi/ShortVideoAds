@@ -7,34 +7,33 @@ import { GhostButton, PrimaryButton } from "../components/Buttons";
 const Result = () => {
   const { id } = useParams<{ id: string }>();
 
-  const [project, setProjectData] = useState<Project>({} as Project);
-  const [loading, setLoading] = useState(true);
-  const [isGenerating, setIsGenerating] = useState(false);
+   const [project, setProjectData] = useState<Project>({} as Project);
+   const [loading, setLoading] = useState(true);
 
-  const fetchProjectData = () => {
-    const stored = localStorage.getItem("generations");
+   useEffect(() => {
+     const fetchProjectData = () => {
+       const stored = localStorage.getItem("generations");
 
-    if (stored) {
+       if (stored) {
+         const generations: Project[] = JSON.parse(stored);
 
+         const foundProject = generations.find((g) => g.id === id);
 
-      const generations: Project[] = JSON.parse(stored);
+         if (foundProject) {
+           setProjectData(foundProject);
+         }
+       }
 
-      const foundProject = generations.find((g) => g.id === id);
+       setLoading(false);
+     };
 
-      if (foundProject) {
-        setProjectData(foundProject);
-      }
-    }
+     const initialize = async () => {
+       await new Promise((resolve) => setTimeout(resolve, 0));
+       fetchProjectData();
+     };
 
-    setLoading(false);
-  };
-    const handleGenerateVideo = async ()=>{
-      setIsGenerating(true)
-    }
-
-  useEffect(() => {
-    fetchProjectData();
-  }, []);
+     initialize();
+   }, [id]);
 
   return loading ? (
     <div className="h-screen w-full flex items-center justify-center">
@@ -132,16 +131,16 @@ const Result = () => {
                 Turn this static image into a dynamic video for social media.
               </p>
 
-              {!project.generatedVideo ? (
-                <PrimaryButton
-                  onClick={handleGenerateVideo}
-                  disabled={isGenerating || !project.generatedImage}
-                  className="w-full justify-center"
-                >
-                  <SparkleIcon className="size-4" />
-                  {isGenerating ? "Generating..." : "Generate Video"}
-                </PrimaryButton>
-              ) : (
+               {!project.generatedVideo ? (
+                 <PrimaryButton
+                   onClick={() => alert("Video generation is not connected yet.")}
+                   disabled={!project.generatedImage}
+                   className="w-full justify-center"
+                 >
+                   <SparkleIcon className="size-4" />
+                   Generate Video
+                 </PrimaryButton>
+               ) : (
                 <div className="rounded-lg bg-green-500/10 border border-green-500/20 p-4 text-center">
                   <p className="text-green-400 font-medium">
                     ✓ Video generated successfully

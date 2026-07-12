@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { assets } from '../assets/assets';
-import { useClerk, useUser } from '@clerk/clerk-react'; // Fixed import
+import { useClerk, useUser } from '@clerk/react';
 
 export default function Navbar() {
     const { user } = useUser();
