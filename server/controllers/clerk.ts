@@ -33,6 +33,32 @@ const clerkWebhooks = async (req: Request, res: Response) => {
         });
         break;
       }
+      case "user.deleted": {
+        await prisma.user.deleted({ where: { id: data.id } });
+        break;
+      }
+      case "paymentAttempt.updated": {
+        if (
+          (data.charge_type === "recurring" ||
+            data.charge_type === "checkout") &&
+          data.status === "paid"
+        ) {
+          const credits = {
+            pro: 80,
+            premium: 240,
+          };
+
+          const clerkUserId = data?.payer?.user_id;
+
+          const planId = data?.subscription_items?.[0]?.plan?.slug as keyof typeof credits;
+
+          if (!clerkUserId) {
+            return res.status(400).json({
+              message: "User ID not found",
+            });
+          }
+
+
     }
   } catch (error) {}
 };
