@@ -15,7 +15,7 @@ export const protect = async (
     next();
   } catch (error: any) {
     res.status(401).json({
-      message: error.code || error.message,
-    });
+      message: error.code || error.message,});
+    
   }
 };
