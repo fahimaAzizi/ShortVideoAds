@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { verifyWebhook } from "@clerk/express/webhooks";
-import { prisma } from "../config/prisma";
+import { prisma } from "../configs/prisma";
 
 const clerkWebhooks = async (req: Request, res: Response) => {
   try {
