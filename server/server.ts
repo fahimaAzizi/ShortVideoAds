@@ -1,8 +1,10 @@
+import "./configs/instrument.mjs"
 import express, { Request, Response } from "express";
 import { clerkMiddleware } from '@clerk/express'
 import cors from 'cors'
 import 'dotenv/config'
 import clerkWebhooks from "./controllers/clerk";
+
 
 const app = express();
 
