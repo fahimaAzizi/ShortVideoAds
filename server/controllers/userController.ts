@@ -38,7 +38,7 @@ export const getUserCredits = async (req: Request, res: Response) => {
 // Get All User Projects
 export const getAllProjects = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.body;
+    const { userId } = req.auth();
 
     const projects = await prisma.project.findMany({
       where: {
@@ -49,18 +49,16 @@ export const getAllProjects = async (req: Request, res: Response) => {
       },
     });
 
-    return res.status(200).json({
-      success: true,
-      projects,
-    });
-   } catch (error: any) {
+    return res.json({ projects });
+  } catch (error: any) {
     Sentry.captureException(error);
 
     return res.status(500).json({
       message: error.code || error.message,
-     });
+    });
   }
 };
+ 
 // Get Project By ID
 export const getProjectById = async (req: Request, res: Response) => {
   try {
