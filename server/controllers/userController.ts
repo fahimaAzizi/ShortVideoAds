@@ -59,26 +59,29 @@ export const getAllProjects = async (req: Request, res: Response) => {
   }
 };
  
-// Get Project By ID
-export const getProjectById = async (req: Request, res: Response) => {
+ // Get Project By ID
+export const getProjectById = async (
+  req: Request,
+  res: Response
+) => {
   try {
+    const { userId } = req.auth();
     const { projectId } = req.params;
 
     const project = await prisma.project.findUnique({
       where: {
         id: projectId,
+        userId,
       },
     });
 
     if (!project) {
       return res.status(404).json({
-        success: false,
         message: "Project not found",
       });
     }
 
-    return res.status(200).json({
-      success: true,
+    return res.json({
       project,
     });
   } catch (error: any) {
@@ -89,6 +92,7 @@ export const getProjectById = async (req: Request, res: Response) => {
     });
   }
 };
+
 
 // Publish / Unpublish Project
 export const toggleProjectPublic = async (
