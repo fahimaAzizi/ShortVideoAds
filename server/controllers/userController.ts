@@ -53,6 +53,82 @@ export const getAllProjects = async (req: Request, res: Response) => {
       success: true,
       projects,
     });
+   } catch (error: any) {
+    Sentry.captureException(error);
+
+    return res.status(500).json({
+      message: error.code || error.message,
+     });
+  }
+};
+// Get Project By ID
+export const getProjectById = async (req: Request, res: Response) => {
+  try {
+    const { projectId } = req.params;
+
+    const project = await prisma.project.findUnique({
+      where: {
+        id: projectId,
+      },
+    });
+
+    if (!project) {
+      return res.status(404).json({
+        success: false,
+        message: "Project not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      project,
+    });
+  } catch (error: any) {
+    Sentry.captureException(error);
+
+    return res.status(500).json({
+      message: error.code || error.message,
+    });
+  }
+};
+
+// Publish / Unpublish Project
+export const toggleProjectPublic = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const { projectId } = req.params;
+
+    const project = await prisma.project.findUnique({
+      where: {
+        id: projectId,
+      },
+    });
+
+    if (!project) {
+      return res.status(404).json({
+        success: false,
+        message: "Project not found",
+      });
+    }
+
+    const updatedProject = await prisma.project.update({
+      where: {
+        id: projectId,
+      },
+      data: {
+        isPublic: !project.isPublic,
+      },
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: updatedProject.isPublic
+        ? "Project published successfully"
+        : "Project unpublished successfully",
+      project: updatedProject,
+    });
   } catch (error: any) {
     Sentry.captureException(error);
 
