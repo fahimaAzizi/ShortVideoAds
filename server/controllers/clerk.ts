@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { verifyWebhook } from "@clerk/express/webhooks";
 import { prisma } from "../configs/prisma";
+import * as Sentry from "@sentry/node"
 
 const clerkWebhooks = async (req: Request, res: Response) => {
   try {
@@ -104,6 +105,7 @@ const clerkWebhooks = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     console.error("Webhook Error:", error);
+    Sentry.captureException(error)
 
     return res.status(500).json({
       message: error.message || "Internal Server Error",
