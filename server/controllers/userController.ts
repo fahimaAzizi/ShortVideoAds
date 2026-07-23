@@ -100,36 +100,42 @@ export const toggleProjectPublic = async (
   res: Response
 ) => {
   try {
+    const { userId } = req.auth();
     const { projectId } = req.params;
 
     const project = await prisma.project.findUnique({
       where: {
         id: projectId,
+        userId,
       },
     });
 
     if (!project) {
       return res.status(404).json({
-        success: false,
         message: "Project not found",
       });
     }
 
-    const updatedProject = await prisma.project.update({
+    if (!project.generatedImage && !project.generatedVideo) {
+      return res.status(404).json({
+        message: "Image or video not generated",
+      });
+    }
+
+    await prisma.project.update({
       where: {
         id: projectId,
       },
       data: {
-        isPublic: !project.isPublic,
+        isPublished: !project.isPublished,
       },
     });
 
-    return res.status(200).json({
+    return res.json({
       success: true,
-      message: updatedProject.isPublic
-        ? "Project published successfully"
-        : "Project unpublished successfully",
-      project: updatedProject,
+      message: project.isPublished
+        ? "Project unpublished successfully"
+        : "Project published successfully",
     });
   } catch (error: any) {
     Sentry.captureException(error);
