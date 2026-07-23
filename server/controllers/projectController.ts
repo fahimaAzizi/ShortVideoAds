@@ -24,3 +24,40 @@ export const createVideo = async (
     res.status(500).json({ message: error.message });
   }
 };
+
+// Get All Published Projects
+export const getAllPublishedProjects = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const projects = await prisma.project.findMany({
+      where: {
+        isPublished: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            image: true,
+          },
+        },
+      },
+    });
+
+    return res.json({
+      success: true,
+      projects,
+    });
+  } catch (error: any) {
+    Sentry.captureException(error);
+
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
