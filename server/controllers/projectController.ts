@@ -16,10 +16,10 @@ export const createProject = async (
 export const createVideo = async (
   req: Request,
   res: Response
-) => {
-  try {
+ ) => {
+   try {
 
-  } catch (error: any) {
+   } catch (error: any) {
     Sentry.captureException(error);
     res.status(500).json({ message: error.message });
   }
