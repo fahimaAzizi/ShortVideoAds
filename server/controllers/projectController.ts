@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import * as Sentry from "@sentry/node";
+import { prisma } from "../configs/prisma";
 
 export const createProject = async (
   req: Request,
@@ -21,7 +22,7 @@ export const createProject = async (
 
     const images: any = req.files;
 
-    if (!images || images.length < 2) {
+    if (images.length < 2 || productName) {
       return res.status(400).json({
         message: "Please upload at least 2 images",
       });
@@ -33,10 +34,14 @@ export const createProject = async (
       },
     });
 
-    if (!user) {
+    if (!user || user.create < 5 ) {
       return res.status(404).json({
         message: "User not found",
       });
+    }else{
+      await prisma.user.update({
+        where: {id}
+      })
     }
 
     if (user.credits <= 0) {
