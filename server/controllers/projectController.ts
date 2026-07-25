@@ -40,8 +40,9 @@ export const createProject = async (
       });
     }else{
       await prisma.user.update({
-        where: {id}
-      })
+        where: {id: userId},
+        data: {credits: {decrement:5}}
+      }).then(()=>{isCreditDeducted = true})
     }
 
     if (user.credits <= 0) {
