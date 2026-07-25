@@ -6,12 +6,60 @@ export const createProject = async (
   res: Response
 ) => {
   try {
+    let tempProjectId: string;
+    const { userId } = req.auth();
+    let isCreditDeducted = false;
 
+    const {
+      name = "New Project",
+      aspectRatio,
+      userPrompt,
+      productName,
+      productDescription,
+      targetLength = 5,
+    } = req.body;
+
+    const images: any = req.files;
+
+    if (!images || images.length < 2) {
+      return res.status(400).json({
+        message: "Please upload at least 2 images",
+      });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    if (user.credits <= 0) {
+      return res.status(400).json({
+        message: "Insufficient credits",
+      });
+    }
+
+    // Continue with:
+    // - Upload images to Cloudinary
+    // - Create temporary project
+    // - Deduct credits
+    // - Generate AI image/video
+    // - Update the project
   } catch (error: any) {
     Sentry.captureException(error);
-    res.status(500).json({ message: error.message });
+
+    return res.status(500).json({
+      message: error.message,
+    });
   }
 };
+
 
 export const createVideo = async (
   req: Request,
