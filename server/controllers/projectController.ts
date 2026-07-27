@@ -34,15 +34,15 @@ export const createProject = async (
       },
     });
 
-    if (!user || user.create < 5 ) {
+    if (!user || user.create < 5) {
       return res.status(404).json({
         message: "User not found",
       });
-    }else{
+    } else {
       await prisma.user.update({
-        where: {id: userId},
-        data: {credits: {decrement:5}}
-      }).then(()=>{isCreditDeducted = true})
+        where: { id: userId },
+        data: { credits: { decrement: 5 } }
+      }).then(() => { isCreditDeducted = true })
     }
 
     if (user.credits <= 0) {
@@ -51,35 +51,30 @@ export const createProject = async (
       });
     }
     const uploadedImages = await Promise.all(
-  images.map(async (item: any) => {
-    let result = await cloudinary.uploader.upload(item.path, {
-      resource_type: "image",
+      images.map(async (item: any) => {
+        let result = await cloudinary.uploader.upload(item.path, {
+          resource_type: "image",
+        });
+
+        return result.secure_url;
+      })
+    );
+
+    const project = await prisma.project.create({
+      data: {
+        name,
+        userId,
+        productName,
+        productDescription,
+        userPrompt,
+        aspectRatio,
+        targetLength: parseInt(targetLength),
+        uploadedImages,
+        isGenerating: true,
+      },
     });
 
-    return result.secure_url;
-  })
-);
-
-const project = await prisma.project.create({
-  data: {
-    name,
-    userId,
-    productName,
-    productDescription,
-    userPrompt,
-    aspectRatio,
-    targetLength: parseInt(targetLength),
-    uploadedImages,
-    isGenerating: true,
-  },
-});
-
-    // Continue with:
-    // - Upload images to Cloudinary
-    // - Create temporary project
-    // - Deduct credits
-    // - Generate AI image/video
-    // - Update the project
+    tempProjectId = project.id;
   } catch (error: any) {
     Sentry.captureException(error);
 
@@ -93,10 +88,10 @@ const project = await prisma.project.create({
 export const createVideo = async (
   req: Request,
   res: Response
- ) => {
-   try {
+) => {
+  try {
 
-   } catch (error: any) {
+  } catch (error: any) {
     Sentry.captureException(error);
     res.status(500).json({ message: error.message });
   }
