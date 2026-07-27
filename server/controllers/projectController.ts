@@ -50,6 +50,29 @@ export const createProject = async (
         message: "Insufficient credits",
       });
     }
+    const uploadedImages = await Promise.all(
+  images.map(async (item: any) => {
+    let result = await cloudinary.uploader.upload(item.path, {
+      resource_type: "image",
+    });
+
+    return result.secure_url;
+  })
+);
+
+const project = await prisma.project.create({
+  data: {
+    name,
+    userId,
+    productName,
+    productDescription,
+    userPrompt,
+    aspectRatio,
+    targetLength: parseInt(targetLength),
+    uploadedImages,
+    isGenerating: true,
+  },
+});
 
     // Continue with:
     // - Upload images to Cloudinary
