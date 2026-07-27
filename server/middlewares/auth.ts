@@ -14,9 +14,10 @@ export const protect = async (
 
     next();
   } catch (error: any) {
-    res.status(401).json({
-      Sentry.captureException(error)
-      message: error.code || error.message,});
-    
+    Sentry.captureException(error);
+
+    return res.status(401).json({
+      message: error.code || error.message,
+    });
   }
 };
