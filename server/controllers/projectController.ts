@@ -4,6 +4,19 @@ import { prisma } from "../configs/prisma";
 import * as cloudinary from "cloudinary";
 import { GenerateContentConfig,HarmBlockThreshold,HarmCategory } from "@google/genai";
 
+import fs from "fs";
+import path from "path";
+
+const loadImage = (path: string, mimeType: string) => {
+  return {
+    inlineData: {
+      data: fs.readFileSync(path).toString("base64"),
+      mimeType,
+    },
+  };
+};
+
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
