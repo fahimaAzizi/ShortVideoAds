@@ -80,10 +80,30 @@ export const createProject = async (
       },
     });
 
-    return res.status(201).json({
-      success: true,
-      project,
-    });
+    const response = await ai.models.generateContent({
+  model: "gemini-2.5-flash-image-preview",
+  contents: userPrompt,
+  config: {
+    maxOutputTokens: 32768,
+    temperature: 1,
+    topP: 0.95,
+    responseModalities: ["IMAGE"],
+    imageConfig: {
+      aspectRatio: aspectRatio || "9:16",
+      imageSize: "1K",
+    },
+    safetySettings: [
+      {
+        category: "HARM_CATEGORY_HARASSMENT",
+        threshold: "BLOCK_LOW_AND_ABOVE",
+      },
+      {
+        category: "HARM_CATEGORY_HATE_SPEECH",
+        threshold: "BLOCK_LOW_AND_ABOVE",
+      },
+    ],
+  },
+});
   } catch (error: any) {
     Sentry.captureException(error);
 
