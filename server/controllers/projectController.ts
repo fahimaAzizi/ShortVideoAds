@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import * as Sentry from "@sentry/node";
 import { prisma } from "../configs/prisma";
 import * as cloudinary from "cloudinary";
+import { GenerateContentConfig,HarmBlockThreshold,HarmCategory } from "@google/genai";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -94,12 +95,20 @@ export const createProject = async (
     },
     safetySettings: [
       {
-        category: "HARM_CATEGORY_HARASSMENT",
-        threshold: "BLOCK_LOW_AND_ABOVE",
+        category: "HarmCategory.HARM_CATEGORY_HATE_SPEECH",
+        threshold: "HarmBlockThreshold.OFF",
       },
       {
-        category: "HARM_CATEGORY_HATE_SPEECH",
-        threshold: "BLOCK_LOW_AND_ABOVE",
+        category: "HarmCategory.HARM_DANGEROUS_HATE_CONTENT",
+        threshold: "HarmBlockThreshold.OFF",
+      },
+        {
+        category: "HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT",
+        threshold: "HarmBlockThreshold.OFF",
+      },
+        {
+        category: "HarmCategory.HARM_CATEGORY_HARSSMENT",
+        threshold: "HarmBlockThreshold.OFF",
       },
     ],
   },
