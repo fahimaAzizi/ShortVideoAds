@@ -2,7 +2,8 @@ import { Request, Response } from "express";
 import * as Sentry from "@sentry/node";
 import { prisma } from "../configs/prisma";
 import * as cloudinary from "cloudinary";
-import { GenerateContentConfig,HarmBlockThreshold,HarmCategory } from "@google/genai";
+import { GenerateContentConfig, HarmBlockThreshold, HarmCategory } from "@google/genai";
+import ai from "../configs/ai";
 
 import fs from "fs";
 import path from "path";
@@ -108,20 +109,20 @@ export const createProject = async (
     },
     safetySettings: [
       {
-        category: "HarmCategory.HARM_CATEGORY_HATE_SPEECH",
-        threshold: "HarmBlockThreshold.OFF",
+        category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+        threshold: HarmBlockThreshold.OFF,
       },
       {
-        category: "HarmCategory.HARM_DANGEROUS_HATE_CONTENT",
-        threshold: "HarmBlockThreshold.OFF",
+        category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+        threshold: HarmBlockThreshold.OFF,
       },
-        {
-        category: "HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT",
-        threshold: "HarmBlockThreshold.OFF",
+      {
+        category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+        threshold: HarmBlockThreshold.OFF,
       },
-        {
-        category: "HarmCategory.HARM_CATEGORY_HARSSMENT",
-        threshold: "HarmBlockThreshold.OFF",
+      {
+        category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+        threshold: HarmBlockThreshold.OFF,
       },
     ],
   },
