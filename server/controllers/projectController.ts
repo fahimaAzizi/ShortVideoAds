@@ -135,6 +135,25 @@ export const createProject = async (
   if(!response?/candidates?.[0]?.content?.parts){
     throw new Error('Unexpected response')
   }
+  const parts = response.candidates[0].content?.parts;
+  let finalBuffer: Bffer | null = null
+
+  for (const part of parts) {
+  if (part.inlineData) {
+    finalBuffer = Buffer.from(
+      part.inlineData.data,
+      "base64"
+    );
+  }
+}
+
+if (!finalBuffer) {
+  throw new Error("Failed to generate image");
+}
+
+const base64Image = `data:image/png;base64,${finalBuffer.toString(
+  "base64"
+)}`;
 
   } catch (error: any) {
     Sentry.captureException(error);
