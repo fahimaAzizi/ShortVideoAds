@@ -154,6 +154,23 @@ if (!finalBuffer) {
 const base64Image = `data:image/png;base64,${finalBuffer.toString(
   "base64"
 )}`;
+const uploadResult = await cloudinary.uploader.upload(base64Image, {
+  resource_type: "image",
+});
+
+await prisma.project.update({
+  where: {
+    id: project.id,
+  },
+  data: {
+    generatedImage: uploadResult.secure_url,
+    isGenerating: false,
+  },
+});
+
+res.json({
+  projectId: project.id,
+});
 
   } catch (error: any) {
     Sentry.captureException(error);
