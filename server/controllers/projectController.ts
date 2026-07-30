@@ -18,7 +18,7 @@ const loadImage = (path: string, mimeType: string) => {
 };
 
 
-cloudinary.config({
+cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
@@ -30,6 +30,7 @@ export const createProject = async (
 ) => {
   try {
     const { userId } = req.auth();
+    const userIdStr = userId as string;
     const {
       name = "New Project",
       aspectRatio,
@@ -39,7 +40,7 @@ export const createProject = async (
       targetLength = 5,
     } = req.body;
 
-    const images: any[] = req.files;
+    const images: any[] = (req as any).files;
 
     if (!images || images.length < 2) {
       return res.status(400).json({
@@ -49,7 +50,7 @@ export const createProject = async (
 
     const user = await prisma.user.findUnique({
       where: {
-        id: userId,
+        id: userIdStr,
       },
     });
 
@@ -66,7 +67,7 @@ export const createProject = async (
     }
 
     await prisma.user.update({
-      where: { id: userId },
+      where: { id: userIdStr },
       data: { credits: { decrement: 5 } },
     });
 
@@ -74,7 +75,7 @@ export const createProject = async (
       images.map(async (item: any) => {
         const base64 = item.buffer.toString("base64");
         const dataUri = `data:${item.mimetype};base64,${base64}`;
-        const result = await cloudinary.uploader.upload(dataUri, {
+        const result = await cloudinary.v2.uploader.upload(dataUri, {
           resource_type: "image",
         });
         return result.secure_url;
@@ -84,7 +85,7 @@ export const createProject = async (
     const project = await prisma.project.create({
       data: {
         name,
-        userId,
+        userId: userIdStr,
         productName,
         productDescription,
         userPrompt,
@@ -127,21 +128,17 @@ export const createProject = async (
     ],
   },
 });
-  const respose: any = await ai.models.generateContent({
-    model, 
-   contents: [img1base64, img2bas64, prompt],
-   config: generationConfig,
-  })
-  if(!response?/candidates?.[0]?.content?.parts){
+
+  if(!response?.candidates?.[0]?.content?.parts){
     throw new Error('Unexpected response')
   }
   const parts = response.candidates[0].content?.parts;
-  let finalBuffer: Bffer | null = null
+  let finalBuffer: Buffer | null = null
 
   for (const part of parts) {
   if (part.inlineData) {
     finalBuffer = Buffer.from(
-      part.inlineData.data,
+      part.inlineData.data!,
       "base64"
     );
   }
@@ -154,7 +151,7 @@ if (!finalBuffer) {
 const base64Image = `data:image/png;base64,${finalBuffer.toString(
   "base64"
 )}`;
-const uploadResult = await cloudinary.uploader.upload(base64Image, {
+const uploadResult = await cloudinary.v2.uploader.upload(base64Image, {
   resource_type: "image",
 });
 
@@ -200,11 +197,13 @@ export const deleteProject = async (
   try {
     const { userId } = req.auth();
     const { projectId } = req.params;
+    const projectIdStr = Array.isArray(projectId) ? projectId[0] : projectId;
+    const userIdStr = userId as string;
 
     const project = await prisma.project.findUnique({
       where: {
-        id: projectId,
-        userId,
+        id: projectIdStr,
+        userId: userIdStr,
       },
     });
 
@@ -216,7 +215,7 @@ export const deleteProject = async (
 
     await prisma.project.delete({
       where: {
-        id: projectId,
+        id: projectIdStr,
       },
     });
 
