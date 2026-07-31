@@ -39,10 +39,11 @@ export const getUserCredits = async (req: Request, res: Response) => {
 export const getAllProjects = async (req: Request, res: Response) => {
   try {
     const { userId } = req.auth();
+    const userIdStr = userId as string;
 
     const projects = await prisma.project.findMany({
       where: {
-        userId,
+        userId: userIdStr,
       },
       orderBy: {
         createdAt: "desc",
@@ -67,11 +68,13 @@ export const getProjectById = async (
   try {
     const { userId } = req.auth();
     const { projectId } = req.params;
+    const projectIdStr = Array.isArray(projectId) ? projectId[0] : projectId;
+    const userIdStr = userId as string;
 
     const project = await prisma.project.findUnique({
       where: {
-        id: projectId,
-        userId,
+        id: projectIdStr,
+        userId: userIdStr,
       },
     });
 
@@ -102,11 +105,13 @@ export const toggleProjectPublic = async (
   try {
     const { userId } = req.auth();
     const { projectId } = req.params;
+    const projectIdStr = Array.isArray(projectId) ? projectId[0] : projectId;
+    const userIdStr = userId as string;
 
     const project = await prisma.project.findUnique({
       where: {
-        id: projectId,
-        userId,
+        id: projectIdStr,
+        userId: userIdStr,
       },
     });
 
@@ -124,7 +129,7 @@ export const toggleProjectPublic = async (
 
     await prisma.project.update({
       where: {
-        id: projectId,
+        id: projectIdStr,
       },
       data: {
         isPublished: !project.isPublished,

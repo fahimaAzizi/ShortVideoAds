@@ -6,7 +6,7 @@ import {
   getAllPublishedProjects,
 } from "../controllers/projectController";
 import { protect } from "../middlewares/auth";
-import upload from "../config/multer";
+import upload from "../configs/multer";
 
 const projectRouter = express.Router();
 

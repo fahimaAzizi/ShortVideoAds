@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const projectController_1 = require("../controllers/projectController");
 const auth_1 = require("../middlewares/auth");
-const multer_1 = __importDefault(require("../config/multer"));
+const multer_1 = __importDefault(require("../configs/multer"));
 const projectRouter = express_1.default.Router();
 // Create Project
 projectRouter.post("/create", multer_1.default.array("images", 2), auth_1.protect, projectController_1.createProject);
