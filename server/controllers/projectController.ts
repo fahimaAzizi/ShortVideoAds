@@ -214,6 +214,30 @@ await prisma.user
     isCreditDeducted = true;
   });
   try {
+   const project = await prisma.project.findUnique({
+  where: {
+    id: projectId,
+    userId,
+  },
+  include: {
+    user: true,
+  },
+});
+
+if (!project || project.isGenerating) {
+  return res.status(404).json({
+    message: "Generation in progress",
+  });
+}
+
+if (project.generatedVideo) {
+  return res.status(404).json({
+    message: "Video already generated",
+  });
+}
+
+await
+
 
   } catch (error: any) {
     Sentry.captureException(error);
