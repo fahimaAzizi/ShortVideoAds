@@ -127,6 +127,15 @@ export const createProject = async (
     ],
   },
 });
+  const respose: any = await ai.models.generateContent({
+    model, 
+   contents: [img1base64, img2bas64, prompt],
+   config: generationConfig,
+  })
+  if(!response?/candidates?.[0]?.content?.parts){
+    throw new Error('Unexpected response')
+  }
+
   } catch (error: any) {
     Sentry.captureException(error);
 
