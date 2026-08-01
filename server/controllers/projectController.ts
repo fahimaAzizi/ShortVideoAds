@@ -184,66 +184,103 @@ export const createVideo = async (
   req: Request,
   res: Response
 ) => {
+  const { userId } = req.auth();
+  const userIdStr = userId as string;
 
   const { projectId } = req.body;
-let isCreditDeducted = false;
+  let isCreditDeducted = false;
 
-const user = await prisma.user.findUnique({
-  where: {
-    id: userId,
-  },
-});
-
-if (!user || user.credits < 10) {
-  return res.status(401).json({
-    message: "Insufficient credits",
-  });
-}
-
-// deduct credits for video generation
-await prisma.user
-  .update({
-    where: {
-      id: userId,
-    },
-    data: {
-      credits: {
-        decrement: 10,
-      },
-    },
-  })
-  .then(() => {
-    isCreditDeducted = true;
-  });
   try {
-   const project = await prisma.project.findUnique({
-  where: {
-    id: projectId,
-    userId,
-  },
-  include: {
-    user: true,
-  },
-});
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userIdStr,
+      },
+    });
 
-if (!project || project.isGenerating) {
-  return res.status(404).json({
-    message: "Generation in progress",
-  });
-}
+    if (!user || user.credits < 10) {
+      return res.status(401).json({
+        message: "Insufficient credits",
+      });
+    }
 
-if (project.generatedVideo) {
-  return res.status(404).json({
-    message: "Video already generated",
-  });
-}
+    // deduct credits for video generation
+    await prisma.user
+      .update({
+        where: {
+          id: userIdStr,
+        },
+        data: {
+          credits: {
+            decrement: 10,
+          },
+        },
+      })
+      .then(() => {
+        isCreditDeducted = true;
+      });
 
-await
+    const project = await prisma.project.findUnique({
+      where: {
+        id: projectId,
+        userId: userIdStr,
+      },
+      include: {
+        user: true,
+      },
+    });
 
+    if (!project || project.isGenerating) {
+      return res.status(404).json({
+        message: "Generation in progress",
+      });
+    }
 
+    if (project.generatedVideo) {
+      return res.status(404).json({
+        message: "Video already generated",
+      });
+    }
+
+    const model = "veo-3.1-generate-preview";
+
+    if (!project.generatedImage) {
+      throw new Error("Generated image not found");
+    }
+
+    const image = await axios.get(project.generatedImage, {
+      responseType: "arraybuffer",
+    });
+
+    const imageBytes: any = Buffer.from(image.data);
+
+    let operation: any = await ai.models.generateVideos({
+      model,
+      prompt,
+      image: {
+        imageBytes,
+      },
+    });
+
+    // Remaining code goes here...
   } catch (error: any) {
     Sentry.captureException(error);
-    res.status(500).json({ message: error.message });
+
+    if (isCreditDeducted) {
+      await prisma.user.update({
+        where: {
+          id: userIdStr,
+        },
+        data: {
+          credits: {
+            increment: 10,
+          },
+        },
+      });
+    }
+
+    return res.status(500).json({
+      message: error.message,
+    });
   }
 };
 
