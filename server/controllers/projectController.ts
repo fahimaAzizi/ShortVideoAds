@@ -7,6 +7,8 @@ import ai from "../configs/ai";
 
 import fs from "fs";
 import path from "path";
+import ai from '../configs/ai.js';
+import axios from "axios";
 
 const loadImage = (path: string, mimeType: string) => {
   return {
