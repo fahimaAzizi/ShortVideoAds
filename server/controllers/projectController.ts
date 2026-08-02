@@ -332,33 +332,29 @@ export const getAllPublishedProjects = async (
   res: Response
 ) => {
   try {
-    const projects = await prisma.project.findMany({
-      where: {
-        isPublished: true,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-      include: {
-        user: {
-          select: {
-            id: true,
-            name: true,
-            image: true,
-          },
-        },
-      },
-    });
+  const { userId } = req.auth();
+const { projectId } = req.params;
 
-    return res.json({
-      success: true,
-      projects,
-    });
-  } catch (error: any) {
-    Sentry.captureException(error);
+const project = await prisma.project.findUnique({
+  where: {
+    id: projectId,
+    userId,
+  },
+});
 
-    return res.status(500).json({
-      message: error.message,
-    });
-  }
+if (!project) {
+  return res.status(404).json({
+    message: "Project not found",
+  });
+}
+
+await prisma.project.delete({
+  where: {
+    id: projectId,
+  },
+});
+
+res.json({
+  message: "Project deleted",
+});
 };
