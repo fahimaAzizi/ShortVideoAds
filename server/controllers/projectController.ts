@@ -327,34 +327,41 @@ export const deleteProject = async (
 };
 
 // Get All Published Projects
-export const getAllPublishedProjects = async (
+
+export const deleteProject = async (
   req: Request,
   res: Response
 ) => {
   try {
-  const { userId } = req.auth();
-const { projectId } = req.params;
+    const { userId } = req.auth();
+    const { projectId } = req.params;
 
-const project = await prisma.project.findUnique({
-  where: {
-    id: projectId,
-    userId,
-  },
-});
+    const project = await prisma.project.findUnique({
+      where: {
+        id: projectId,
+        userId,
+      },
+    });
 
-if (!project) {
-  return res.status(404).json({
-    message: "Project not found",
-  });
-}
+    if (!project) {
+      return res.status(404).json({
+        message: "Project not found",
+      });
+    }
 
-await prisma.project.delete({
-  where: {
-    id: projectId,
-  },
-});
+    await prisma.project.delete({
+      where: {
+        id: projectId,
+      },
+    });
 
-res.json({
-  message: "Project deleted",
-});
+    res.json({
+      message: "Project deleted",
+    });
+  } catch (error: any) {
+    Sentry.captureException(error);
+    res.status(500).json({
+      message: error.code || error.message,
+    });
+  }
 };
