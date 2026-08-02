@@ -9,12 +9,16 @@ const express_2 = require("@clerk/express");
 const cors_1 = __importDefault(require("cors"));
 require("dotenv/config");
 const clerk_1 = __importDefault(require("./controllers/clerk"));
+const userroutes_1 = __importDefault(require("./routes/userroutes"));
+const projectRoutes_1 = __importDefault(require("./routes/projectRoutes"));
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 5000;
 app.use((0, cors_1.default)());
 app.post('/api/clerk', express_1.default.raw({ type: 'application/json' }), clerk_1.default);
 app.use(express_1.default.json());
 app.use((0, express_2.clerkMiddleware)());
+app.use("/api/user", userroutes_1.default);
+app.use("/api/project", projectRoutes_1.default);
 app.get("/", (req, res) => {
     res.send("Server is Live!");
 });

@@ -4,7 +4,8 @@ import { clerkMiddleware } from '@clerk/express'
 import cors from 'cors'
 import 'dotenv/config'
 import clerkWebhooks from "./controllers/clerk";
-
+import userRouter from "./routes/userroutes";
+import projectRouter from "./routes/projectRoutes";
 
 const app = express();
 
@@ -17,7 +18,8 @@ app.post('/api/clerk',express.raw({type: 'application/json'}), clerkWebhooks)
 app.use(express.json())
 app.use(clerkMiddleware())
 
-
+app.use("/api/user", userRouter);
+app.use("/api/project", projectRouter);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Server is Live!");
